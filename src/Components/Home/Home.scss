@@ -1,0 +1,31 @@
+.banner {
+  background-color: black;
+  height: 400px;
+}
+
+.row {
+  padding: 1rem;
+  background-color: black;
+}
+
+.row > div {
+  display: flex;
+  justify-content: space-evenly;
+  overflow-x: auto; // horizontal scroll bar is many pics don't fit the screen
+}
+
+.row > h2 {
+  color: white;
+  font-weight: 400;
+  margin: 0.3rem;
+}
+.card {
+  width: 200px;
+  cursor: pointer;
+  transition: transform 0.5s; // highlighting speed
+  margin: 0.5rem;
+}
+
+.card:hover {
+  transform: translateY(-10px) scale(1.1); // card highlights when hovered
+}
