@@ -1,6 +1,82 @@
 .banner {
   background-color: black;
   height: 400px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  padding: 3rem;
+  box-sizing: border-box;
+}
+
+.banner::after {
+  content: '';
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  position: absolute;
+  background: black;
+  opacity: 0.5;
+}
+
+.banner > h1 {
+  color: white;
+  font-size: 3rem;
+  width: 50%;
+  z-index: 10;
+  margin-left: 1rem;
+}
+
+.banner > p {
+  color: white;
+  font-size: 1rem;
+  width: 40%;
+  z-index: 10;
+  letter-spacing: 1.5px;
+  word-spacing: 2px;
+  margin-left: 1rem;
+  font-weight: 100;
+}
+
+.banner > div {
+  display: flex;
+}
+
+.banner > div > button {
+  padding: 0.8rem;
+  width: 110px;
+  outline: none;
+  border: none;
+  z-index: 10;
+  border-radius: 5px;
+  margin: 1rem;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.5s;
+}
+
+.banner > div > button:hover {
+  opacity: 0.6;
+}
+
+.banner > div > button:nth-child(odd){
+  background-color: white;
+}
+.banner > div > button:nth-child(even){
+  background-color: rgb(83, 83, 83);
+  color: white;
+}
+
+.banner > div > button > svg{
+  font-size: 1.4rem;
+  margin: 0 5px;
 }
 
 .row {
@@ -19,13 +95,41 @@
   font-weight: 400;
   margin: 0.3rem;
 }
+
 .card {
-  width: 200px;
+  width: 150px;
   cursor: pointer;
   transition: transform 0.5s; // highlighting speed
   margin: 0.5rem;
+  border-radius: 5px;
 }
 
 .card:hover {
   transform: translateY(-10px) scale(1.1); // card highlights when hovered
+}
+
+.genreBox {
+  overflow-x: auto;
+  display: flex;
+  background-color: black;
+  height: 75px;
+}
+
+.genreBox > a {
+  color: black;
+  background-color: rgba(226, 220, 220, 0.534);
+  padding: 1rem 0;
+  margin: 1rem;
+  border-radius: 5px;
+  transition: all 0.5s;
+  min-width: 7rem;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+}
+
+.genreBox > a:hover {
+  background-color: rgba(236, 236, 236, 0.822);
 }

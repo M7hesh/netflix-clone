@@ -5,6 +5,10 @@
   font-family: 'Roboto', sans-serif;
 }
 
+*::-webkit-scrollbar{
+  display: none;
+}
+
 a {
   color: white;
   text-decoration: none;
@@ -32,15 +36,23 @@ a {
 .header > svg {
   color: white;
   cursor: pointer;
-  font-size: 2rem;
+  font-size: 1.7rem;
+  margin-right: 1rem;
 }
 
 .header > svg:hover{
   color: gray;
+  transform: translateY(-1px) scale(1.1);
 }
 
 .header > div > a{
   margin: 1vmax;
-  font-size: 1.3rem;
+  font-size: 1rem;
   font-weight: 300;
+  transition: transform 0.5s;
+  color: gray
+}
+
+.header > div > a:hover{
+color: white;
 }
