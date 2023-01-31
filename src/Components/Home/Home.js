@@ -5,8 +5,9 @@ import { Link } from "react-router-dom";
 import { BiPlay } from "react-icons/bi";
 import { AiOutlinePlus } from "react-icons/ai";
 
-const API_KEY = "d0705aca799d5e99f9033942f5433ec2";
-// 'https://api.themoviedb.org/3/movie/upcoming?api_key=d0705aca799d5e99f9033942f5433ec2&language=en-US&page=1'
+const API_KEY = process.env.REACT_APP_MOVIE_DB_API_KEY;
+// React app supports reads environment variables that begin with REACT_APP and makes them available through process.env.
+// 'https://api.themoviedb.org/3/movie/upcoming?api_key=<API_KEY>&language=en-US&page=1'
 const URL = "https://api.themoviedb.org/3";
 const IMG_URL = "https://image.tmdb.org/t/p/original";
 const UPCOMING = "upcoming";
@@ -35,13 +36,16 @@ const Home = () => {
   const [popularMovies, setPopularMovies] = useState([]);
   const [topRatedMovies, setTopRatedMovies] = useState([]);
   const [movieGenres, setmovieGenres] = useState([]);
+  const [popularMoviePosterIndex, setPopularMoviePosterIndex] = useState([]);
 
   useEffect(() => {
-    const fetchMovies = async ({ rowCategory, setState }) => {
+    const fetchMovies = async ({ rowCategory, setState, setBannerFlag }) => {
       const {
         data: { results },
       } = await axios.get(`${URL}/movie/${rowCategory}?api_key=${API_KEY}`);
       setState(results);
+      setBannerFlag &&
+        setPopularMoviePosterIndex(Math.floor(Math.random() * results.length));
     };
 
     const getAllGenre = async () => {
@@ -51,36 +55,48 @@ const Home = () => {
       setmovieGenres(genres);
     };
 
-    fetchMovies({ rowCategory: NOW_PLAYING, setState: setNowPlayingMovies });
     fetchMovies({ rowCategory: UPCOMING, setState: setUpcomingMovies });
-    fetchMovies({ rowCategory: POPULAR, setState: setPopularMovies });
+    fetchMovies({ rowCategory: NOW_PLAYING, setState: setNowPlayingMovies });
+    fetchMovies({
+      rowCategory: POPULAR,
+      setState: setPopularMovies,
+      setBannerFlag: true,
+    });
     fetchMovies({ rowCategory: TOP_RATED, setState: setTopRatedMovies });
     getAllGenre();
   }, []);
+
+  const truncate = (description, length) => {
+    return description?.length > length
+      ? description.substr(0, length - 1) + "..."
+      : description;
+  };
 
   return (
     <section className="home">
       <div
         className="banner"
         style={{
-          backgroundImage: popularMovies[0]
-            ? `url(${`${IMG_URL}/${popularMovies[0].poster_path}`})`
+          backgroundImage: popularMovies[popularMoviePosterIndex]
+            ? `url(${`${IMG_URL}/${popularMovies[popularMoviePosterIndex].poster_path}`})`
             : "black",
         }}
       >
-        {popularMovies[0] && (
-          <>
-            <h1>{popularMovies[0].original_title}</h1>
-            <p>{popularMovies[0].overview}</p>
-          </>
-        )}
-        <div>
-          <button>
-            <BiPlay /> Play
-          </button>
-          <button>
-            My List <AiOutlinePlus />
-          </button>
+        <div className="bannerContents">
+          {popularMovies[0] && (
+            <>
+              <h1>{popularMovies[popularMoviePosterIndex].original_title}</h1>
+              <p>{truncate(popularMovies[popularMoviePosterIndex].overview)}</p>
+            </>
+          )}
+          <div>
+            <button>
+              <BiPlay /> Play
+            </button>
+            <button>
+              My List <AiOutlinePlus />
+            </button>
+          </div>
         </div>
       </div>
 

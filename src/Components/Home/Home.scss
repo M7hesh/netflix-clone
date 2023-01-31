@@ -9,6 +9,7 @@
   justify-content: space-evenly;
   padding: 3rem;
   box-sizing: border-box;
+  background-position: center center;
 }
 
 .banner::after {
@@ -19,10 +20,10 @@
   left: 0%;
   position: absolute;
   background: black;
-  opacity: 0.5;
+  opacity: 0.3;
 }
 
-.banner > h1 {
+.bannerContents > h1 {
   color: white;
   font-size: 3rem;
   width: 50%;
@@ -30,22 +31,23 @@
   margin-left: 1rem;
 }
 
-.banner > p {
+.bannerContents > p {
   color: white;
   font-size: 1rem;
-  width: 40%;
+  width: 45rem;
   z-index: 10;
   letter-spacing: 1.5px;
   word-spacing: 2px;
   margin-left: 1rem;
   font-weight: 100;
+  max-width: 550px;
 }
 
-.banner > div {
+.bannerContents > div {
   display: flex;
 }
 
-.banner > div > button {
+.bannerContents > div > button {
   padding: 0.8rem;
   width: 110px;
   outline: none;
@@ -62,19 +64,23 @@
   transition: all 0.5s;
 }
 
-.banner > div > button:hover {
-  opacity: 0.6;
+.bannerContents > div > button:nth-child(odd){
+  background-color: rgba(248, 245, 245, 0.733);
 }
-
-.banner > div > button:nth-child(odd){
-  background-color: white;
-}
-.banner > div > button:nth-child(even){
-  background-color: rgb(83, 83, 83);
+.bannerContents > div > button:nth-child(even){
+  background-color: rgba(51, 51, 51, 0.63);
   color: white;
 }
 
-.banner > div > button > svg{
+.bannerContents > div > button:nth-child(odd):hover {
+  background-color: white;
+}
+.bannerContents > div > button:nth-child(even):hover{
+  background-color: rgb(248, 247, 247);
+  color: black;
+}
+
+.bannerContents > div > button > svg{
   font-size: 1.4rem;
   margin: 0 5px;
 }
