@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Home.scss";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BiPlay } from "react-icons/bi";
 import { AiOutlinePlus } from "react-icons/ai";
 
@@ -15,8 +15,19 @@ const NOW_PLAYING = "now_playing";
 const POPULAR = "popular";
 const TOP_RATED = "top_rated";
 
-const Card = ({ img }) => {
-  return <img className="card" src={img} alt="" />;
+const Card = ({ img, movieId, movieTitle, movieOverview }) => {
+  const navigate = useNavigate();
+  const getMovieVideo = async () => {
+    const {
+      data: { results },
+    } = await axios.get(
+      `https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=${API_KEY}`
+    );
+    const videoId = results?.filter((obj) => obj.type === "Trailer")[0].key;
+    //navigate to Trailer
+    navigate("/trailer", { state: { videoId, movieTitle, movieOverview } });
+  };
+  return <img className="card" src={img} alt="" onClick={getMovieVideo} />;
 };
 
 const Row = ({ title, moviesArray = [] }) => (
@@ -24,7 +35,13 @@ const Row = ({ title, moviesArray = [] }) => (
     <h2>{title}</h2>
     <div>
       {moviesArray.map((item, index) => (
-        <Card key={index} img={`${IMG_URL}/${item.poster_path}`} />
+        <Card
+          key={index}
+          img={`${IMG_URL}/${item.poster_path}`}
+          movieId={item.id}
+          movieTitle={item.original_title}
+          movieOverview={item.overview}
+        />
       ))}
     </div>
   </div>
@@ -46,6 +63,7 @@ const Home = () => {
       setState(results);
       setBannerFlag &&
         setPopularMoviePosterIndex(Math.floor(Math.random() * results.length));
+      // console.log(results[0]);
     };
 
     const getAllGenre = async () => {

@@ -56,3 +56,25 @@ a {
 .header > div > a:hover{
 color: white;
 }
+
+.trailer {
+  background-color: black;
+  height: 100vh;
+}
+
+.youtube {
+  display:flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.trailerInfo {
+  color: white;
+  margin: 1rem 2rem;
+}
+
+.trailerInfo > p {
+  margin-top: 1rem;
+  letter-spacing: 1.2px;
+  word-spacing: 1.3px;
+}
