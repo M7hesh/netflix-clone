@@ -66,6 +66,7 @@
 
 .bannerContents > div > button:nth-child(odd){
   background-color: rgba(248, 245, 245, 0.733);
+  width: 140px;
 }
 .bannerContents > div > button:nth-child(even){
   background-color: rgba(51, 51, 51, 0.63);
@@ -93,7 +94,7 @@
 .row > div {
   display: flex;
   justify-content: space-evenly;
-  overflow-x: auto; // horizontal scroll bar is many pics don't fit the screen
+  overflow-x: auto; /* horizontal scroll bar is many pics don't fit the screen */
 }
 
 .row > h2 {
@@ -105,13 +106,13 @@
 .card {
   width: 150px;
   cursor: pointer;
-  transition: transform 0.5s; // highlighting speed
+  transition: transform 0.5s;  /* highlighting speed */
   margin: 0.5rem;
   border-radius: 5px;
 }
 
 .card:hover {
-  transform: translateY(-10px) scale(1.1); // card highlights when hovered
+  transform: translateY(-10px) scale(1.1);  /* card highlights when hovered */
 }
 
 .genreBox {

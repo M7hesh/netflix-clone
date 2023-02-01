@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
-import "./Home.scss";
+import "./Home.css";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { BiPlay } from "react-icons/bi";
 import { AiOutlinePlus } from "react-icons/ai";
+
+// TODO: Write tests, implement signin/signout,and Redux
+// TODO: Create and move all components, constants, helper functions into their separate files
 
 const API_KEY = process.env.REACT_APP_MOVIE_DB_API_KEY;
 // React app supports reads environment variables that begin with REACT_APP and makes them available through process.env.
@@ -15,19 +18,36 @@ const NOW_PLAYING = "now_playing";
 const POPULAR = "popular";
 const TOP_RATED = "top_rated";
 
+const movieCardClickHandler = async ({
+  navigate,
+  movieId,
+  movieTitle,
+  movieOverview,
+}) => {
+  const {
+    data: { results },
+  } = await axios.get(
+    `https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=${API_KEY}`
+  );
+  const videoId = results?.filter((obj) => obj?.type === "Trailer")[0]?.key;
+  //navigate to Trailer Page
+  videoId &&
+    navigate("/trailer", { state: { videoId, movieTitle, movieOverview } });
+};
+
 const Card = ({ img, movieId, movieTitle, movieOverview }) => {
   const navigate = useNavigate();
-  const getMovieVideo = async () => {
-    const {
-      data: { results },
-    } = await axios.get(
-      `https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=${API_KEY}`
-    );
-    const videoId = results?.filter((obj) => obj.type === "Trailer")[0].key;
-    //navigate to Trailer
-    navigate("/trailer", { state: { videoId, movieTitle, movieOverview } });
-  };
-  return <img className="card" src={img} alt="" onClick={getMovieVideo} />;
+
+  return (
+    <img
+      className="card"
+      src={img}
+      alt=""
+      onClick={() =>
+        movieCardClickHandler({ navigate, movieId, movieTitle, movieOverview })
+      }
+    />
+  );
 };
 
 const Row = ({ title, moviesArray = [] }) => (
@@ -48,6 +68,8 @@ const Row = ({ title, moviesArray = [] }) => (
 );
 
 const Home = () => {
+  const navigate = useNavigate();
+
   const [upcomingMovies, setUpcomingMovies] = useState([]);
   const [nowPlayingMovies, setNowPlayingMovies] = useState([]);
   const [popularMovies, setPopularMovies] = useState([]);
@@ -63,7 +85,6 @@ const Home = () => {
       setState(results);
       setBannerFlag &&
         setPopularMoviePosterIndex(Math.floor(Math.random() * results.length));
-      // console.log(results[0]);
     };
 
     const getAllGenre = async () => {
@@ -108,8 +129,19 @@ const Home = () => {
             </>
           )}
           <div>
-            <button>
-              <BiPlay /> Play
+            <button
+              onClick={() =>
+                movieCardClickHandler({
+                  navigate,
+                  movieId: popularMovies[popularMoviePosterIndex].id,
+                  movieTitle:
+                    popularMovies[popularMoviePosterIndex].original_title,
+                  movieOverview:
+                    popularMovies[popularMoviePosterIndex].overview,
+                })
+              }
+            >
+              <BiPlay /> Play Trailer
             </button>
             <button>
               My List <AiOutlinePlus />

@@ -24,18 +24,16 @@ const Trailer = () => {
       autoplay: 1,
     },
   };
-  const handlePlayVideo = (event) => {
-    event.target.pauseVideo();
-  };
+  // const handlePlayVideo = (event) => {
+  //   event.target.pauseVideo();
+  // };
   return (
     <div className="trailer">
       <div className="youtube">
         <YouTube
-          // videoId="tHb7WlgyaUc"
           videoId={videoId}
-          role="button"
           opts={opts}
-          onReady={handlePlayVideo}
+          // onReady={handlePlayVideo} //enable to stop video playing directly
         ></YouTube>
       </div>
       <div className="trailerInfo">
